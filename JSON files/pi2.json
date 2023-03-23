@@ -1,0 +1,152 @@
+{
+  "components": [
+    {
+      "name": "local",
+      "service_config": [],
+      "type": "board",
+      "attributes": {},
+      "depends_on": [],
+      "model": "pi"
+    },
+    {
+      "service_config": [],
+      "type": "motor",
+      "attributes": {
+        "max_rpm": 200,
+        "pins": {
+          "a": "29",
+          "pwm": "32",
+          "b": "31"
+        },
+        "board": "local",
+        "dir_flip": true
+      },
+      "depends_on": [],
+      "model": "gpio",
+      "name": "pivot"
+    },
+    {
+      "depends_on": [],
+      "model": "gpio",
+      "name": "lift",
+      "service_config": [],
+      "type": "motor",
+      "attributes": {
+        "dir_flip": true,
+        "board": "local",
+        "max_rpm": 200,
+        "pins": {
+          "b": "35",
+          "pwm": "37",
+          "a": "33"
+        }
+      }
+    },
+    {
+      "depends_on": [],
+      "name": "lasercam",
+      "type": "camera",
+      "service_config": [
+        {
+          "type": "data_manager",
+          "attributes": {
+            "capture_methods": [
+              {
+                "capture_frequency_hz": 1,
+                "disabled": true,
+                "method": "ReadImage",
+                "additional_params": {
+                  "mime_type": "image/jpeg"
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "model": "webcam",
+      "attributes": {
+        "format": "",
+        "video_path": "video0",
+        "width_px": 0,
+        "height_px": 0,
+        "debug": false
+      }
+    },
+    {
+      "name": "insert",
+      "type": "motor",
+      "model": "gpio",
+      "attributes": {
+        "board": "local",
+        "max_rpm": 200,
+        "pins": {
+          "b": "38",
+          "pwm": "40",
+          "a": "36"
+        },
+        "dir_flip": true
+      },
+      "depends_on": []
+    },
+    {
+      "depends_on": [],
+      "name": "color_detector",
+      "type": "camera",
+      "model": "transform",
+      "attributes": {
+        "source": "lasercam",
+        "pipeline": [
+          {
+            "attributes": {
+              "detector_name": "my_color_detector",
+              "confidence_threshold": 0.02
+            },
+            "type": "detections"
+          }
+        ]
+      }
+    },
+    {
+      "type": "motor",
+      "model": "gpio",
+      "attributes": {
+        "pins": {
+          "b": "10",
+          "pwm": "12",
+          "a": "8"
+        },
+        "board": "local",
+        "max_rpm": 200
+      },
+      "depends_on": [],
+      "name": "switch"
+    }
+  ],
+  "services": [
+    {
+      "type": "base_remote_control",
+      "attributes": {
+        "input_controller": "webgamepad",
+        "base": "base"
+      },
+      "name": " scuttle_gamepad"
+    },
+    {
+      "type": "vision",
+      "attributes": {
+        "register_models": [
+          {
+            "type": "color_detector",
+            "parameters": {
+              "hue_tolerance_pct": 0.06,
+              "segment_size_px": 100,
+              "detect_color": "#95ffff"
+            },
+            "name": "my_color_detector"
+          }
+        ]
+      },
+      "name": " "
+    }
+  ]
+}

@@ -1,0 +1,204 @@
+{
+  "components": [
+    {
+      "attributes": {},
+      "depends_on": [],
+      "model": "pi",
+      "name": "local",
+      "service_config": [],
+      "type": "board"
+    },
+    {
+      "model": "gpio",
+      "name": "right-f",
+      "service_config": [],
+      "type": "motor",
+      "attributes": {
+        "board": "local",
+        "max_rpm": 200,
+        "min_power_pct": 0,
+        "max_power_pct": 0.7,
+        "dir_flip": true,
+        "pins": {
+          "b": "35",
+          "pwm": "37",
+          "a": "36"
+        }
+      },
+      "depends_on": []
+    },
+    {
+      "name": "left-f",
+      "service_config": [],
+      "type": "motor",
+      "attributes": {
+        "board": "local",
+        "min_power_pct": 0,
+        "max_power_pct": 0.7,
+        "max_rpm": 200,
+        "pins": {
+          "b": "32",
+          "pwm": "29",
+          "a": "31"
+        }
+      },
+      "depends_on": [],
+      "model": "gpio"
+    },
+    {
+      "attributes": {
+        "pins": {
+          "pwm": "33",
+          "a": "38",
+          "b": "40"
+        },
+        "board": "local",
+        "max_rpm": 200,
+        "dir_flip": true,
+        "min_power_pct": 0,
+        "max_power_pct": 0.7
+      },
+      "depends_on": [],
+      "model": "gpio",
+      "name": "left-r",
+      "service_config": [],
+      "type": "motor"
+    },
+    {
+      "depends_on": [],
+      "model": "gpio",
+      "name": "right-r",
+      "service_config": [],
+      "type": "motor",
+      "attributes": {
+        "min_power_pct": 0,
+        "max_power_pct": 0.7,
+        "max_rpm": 200,
+        "pins": {
+          "b": "13",
+          "pwm": "15",
+          "a": "11"
+        },
+        "board": "local",
+        "dir_flip": true
+      }
+    },
+    {
+      "model": "wheeled",
+      "name": "base",
+      "service_config": [],
+      "type": "base",
+      "attributes": {
+        "wheel_circumference_mm": 50,
+        "width_mm": 450,
+        "left": [
+          "left-f",
+          "left-r"
+        ],
+        "right": [
+          "right-f",
+          "right-r"
+        ]
+      },
+      "depends_on": [
+        "right-f",
+        "left-f",
+        "left-r",
+        "right-r"
+      ]
+    },
+    {
+      "service_config": [
+        {
+          "attributes": {
+            "capture_methods": [
+              {
+                "method": "ReadImage",
+                "additional_params": {
+                  "mime_type": "image/jpeg"
+                },
+                "capture_frequency_hz": 1,
+                "disabled": true
+              }
+            ]
+          },
+          "type": "data_manager"
+        }
+      ],
+      "model": "webcam",
+      "attributes": {
+        "height_px": 0,
+        "debug": false,
+        "format": "",
+        "video_path": "video0",
+        "width_px": 0
+      },
+      "depends_on": [],
+      "name": "chargercam",
+      "type": "camera"
+    },
+    {
+      "type": "input_controller",
+      "model": "webgamepad",
+      "attributes": {},
+      "depends_on": [
+        "base"
+      ],
+      "name": "WebGamepad"
+    },
+    {
+      "depends_on": [],
+      "name": "color-detector",
+      "type": "camera",
+      "model": "transform",
+      "attributes": {
+        "source": "",
+        "pipeline": [
+          {
+            "type": "detections",
+            "attributes": {
+              "confidence_threshold": 0.05,
+              "detector_name": "my_color_detector"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "services": [
+    {
+      "name": " scuttle_gamepad",
+      "type": "base_remote_control",
+      "attributes": {
+        "base": "base",
+        "input_controller": "WebGamepad"
+      }
+    },
+    {
+      "name": " ",
+      "type": "vision",
+      "attributes": {
+        "register_models": [
+          {
+            "name": "my_color_detector",
+            "type": "color_detector",
+            "parameters": {
+              "hue_tolerance_pct": 0.06,
+              "segment_size_px": 100,
+              "detect_color": "#95ffff"
+            }
+          },
+          {
+            "parameters": {
+              "model_path": "/path/to/model.tflite",
+              "label_path": "/path/to/labels.txt",
+              "num_threads": 1
+            },
+            "name": "my_classifier",
+            "type": "tflite_classifier"
+          }
+        ]
+      }
+    }
+  ]
+}
