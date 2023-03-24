@@ -12,3 +12,9 @@ Quick Links:
 ### About Chargla:
 Chargla is a mobile robot prototype test platform for autonomously inserting a Tesla charger into the charge port.
 
+
+<a id="about_this_{thing}"></a>
+### CAD data:
+CAD part files are in Solidworks (2021 edition) SLDPRT format. The full assembly is in STEP format - note that the Mecanum wheel/motor assemblies are excluded since this CAD is available from GrabCAD (refer to BOM for link). 
+
+
