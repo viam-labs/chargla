@@ -16,10 +16,10 @@ Chargla has the following key modules:-
 ### 
 
 ### Construction Guide:
-Refer to the [Chargla Construction Guide](https://docs.google.com/document/d/15zk6U9WWfHUjSALZDOvtBSkvUx8U9ysvMet9SF8oO24/edit) for details on the mechanical construction and electrical wiring. 
+Refer to the [Chargla Construction Guide](https://docs.google.com/document/d/15zk6U9WWfHUjSALZDOvtBSkvUx8U9ysvMet9SF8oO24?usp=sharing) for details on the mechanical construction and electrical wiring. 
 
 ### Chargla BOM:
-Refer to the [Chargla BOM](https://docs.google.com/spreadsheets/d/1hXYuUQUdCd2xPFUvkVT4j0LRwTdFnVpzmN-u1b5q8zc/edit#gid=0) for a components list and ordering details. 
+Refer to the [Chargla BOM](https://docs.google.com/spreadsheets/d/1hXYuUQUdCd2xPFUvkVT4j0LRwTdFnVpzmN-u1b5q8zc?usp=sharing) for a components list and ordering details. 
 
 <a id="about_this_{thing}"></a>
 ### CAD data:
