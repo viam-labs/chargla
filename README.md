@@ -26,7 +26,7 @@ Refer to the [Chargla BOM](https://docs.google.com/spreadsheets/d/1hXYuUQUdCd2xP
 CAD part files are in Solidworks (2021 edition) SLDPRT format. The full assembly is in STEP format - note that the Mecanum wheel/motor assemblies are excluded since this CAD is available from GrabCAD (refer to BOM for link). 
 
 ### Contact:
-For assistance with this project contact [Chris Payne](chris@viam.com) 
+For assistance with this project contact [Chris Payne](mailto:chris@viam.com) 
 
 
 
