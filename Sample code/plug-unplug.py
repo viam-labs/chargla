@@ -46,7 +46,7 @@ async def main():
 
     print("going to plugin")
     await plugin_once_aligned(base, switch, insert)
-    print("charing for a hot minute")
+    print("charging for a hot minute")
     await asyncio.sleep(10)
     print("unplugging")
     await unplug(base, switch, insert)
